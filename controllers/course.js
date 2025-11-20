@@ -8,10 +8,15 @@ import { Payment } from "../models/Payment.js"
 
 
 export const getAllCourses = tryCatch(async (req, res) => {
-    const courses = await Courses.find();
+    const courses = await Courses.find({
+    _id: { $in: req.user.subscription }
+    
     res.json({
         courses,
     });
+});
+
+
 });
 
 export const getSingleCourse = tryCatch(async (req, res) => {

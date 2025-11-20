@@ -66,10 +66,11 @@ export const VerifyUser = tryCatch(async (req, res) => {
     });
 
     await User.create({
-        name: verify.user.name,
-        email: verify.user.email,
-        password: verify.user.password,
-    })
+    name: verify.user.name,
+    email: verify.user.email,
+    password: verify.user.password,
+    subscription: [],  // ✅ FIXED
+})
 
     res.json({
         message: "User Registered",
