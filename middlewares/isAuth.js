@@ -23,7 +23,8 @@ export const isAuth = async (req, res, next) => {
       return res.status(401).json({ message: "Token Expired, Please Login Again" });
     }
 
-    const user = await User.findById(decoded.id || decoded._id).select("-password");
+    const userId = decoded.id || decoded._id || decoded.userId;
+    const user = await User.findById(userId).select("-password");
 
     if (!user) {
       return res.status(401).json({ message: "User not found" });
@@ -37,14 +38,14 @@ export const isAuth = async (req, res, next) => {
 };
 
 export const isAdmin = (req, res, next) => {
-  try{
-    if(req.user.role !== "admin")
+  try {
+    if (req.user.role !== "admin")
       return res.status(403).json({
         message: "YOU ARE NOT ADMIN"
-    });
+      });
 
     next();
-  } catch(error) {
+  } catch (error) {
     res.status(500).json({
       message: error.message,
     });
