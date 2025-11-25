@@ -15,7 +15,12 @@ const app = express();
 
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.use(express.json());
-app.use(cors());
+
+app.use(cors({
+    origin: "*",
+    credentials: true
+}
+));
 
 const port = process.env.PORT;
 
